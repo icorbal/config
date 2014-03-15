@@ -1,1 +1,78 @@
-term xterm
+activity "%c activity -> %n%f %t"
+autodetach on
+altscreen on
+bell "%c bell -> %n%f %t^G"
+defflow auto
+defscrollback 10000
+defutf8 on
+msgwait 2                 # 1 second messages
+startup_message off        # disable the startup splash message
+shell -bash
+vbell_msg "[[[ ding ]]]"
+vbell off
+nethack on
+#shelltitle ": |bash"
+setenv LC_CTYPE en_US.UTF-8
+defutf8 on
+
+#terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+attrcolor b ".I"
+# tell screen how to set colors. AB = background, AF=foreground
+termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+termcapinfo xterm-256color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+# erase background with current bg color
+defbce "on"
+term xterm-256color
+
+escape ^\\
+
+hardstatus alwayslastline
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+# Some OSX fixes from http://superuser.com/questions/231647/how-do-i-get-the-f1-f12-keys-to-switch-screens-in-gnu-screen-in-cygwin-when-conne
+terminfo * k1=\EOP
+terminfo * k2=\EOQ
+terminfo * k3=\EOR
+terminfo * k4=\EOS
+terminfo * k5=\E[15~
+terminfo * k6=\E[17~
+terminfo * k7=\E[18~
+terminfo * k8=\E[19~
+terminfo * k9=\E[20~
+terminfo * F1=\E[23~
+terminfo * F2=\E[24~
+
+# remove some key bindings
+bind k
+bind W
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind h
+# make them safer
+bind 'K' kill
+bind 'w' windowlist
+
+bind R eval "source $HOME/.screenrc" "echo '.screenrc reloaded!'"
+
+# F8 to turn the status bar off
+bindkey -k k8 hardstatus alwayslastline
+# F9 to turn the status bar on 
+bindkey -k k9 hardstatus alwaysignore
+
+# Do cat > /dev/null and then start typing to work out the keycodes that need to go here
+bindkey ^[[1;5D prev # Ctrl-left
+bindkey ^[[1;5C next # Ctrl-right
+bindkey ^[[1;5B kill # Ctrl-down
+#bindkey "^[[5D" prev # OSX
+#bindkey "^[[5C" next # OSX
+
+#bindkey -k k5 windowlist
+
+bindkey ^[[1;5A copy
+# Default windows

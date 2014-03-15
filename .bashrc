@@ -197,10 +197,107 @@
 #MAVEN
 alias 'mci=mvn clean install'
 #SVN
-alias 'svnu=svn update'
 alias 'svn-add-unversioned=svn st | grep "^\?" | awk "{print \$2}" | xargs svn add $1'
 export SVN_EDITOR=vim
 #SERVERS
 alias watch-jb-css-cds-log='tail -f \\\\css-cds\\c$\\jboss-eap-6.1\\standalone\\log\\server.log'
 alias watch-jb-css-cds-3-log='tail -f \\\\css-cds-3\\d$\\bin\\jboss\\standalone\\log\\server.log'
 
+export LS_OPTIONS='--color=yes'
+alias less="less -R"
+alias ls='ls $LS_OPTION -h --color'
+alias ll='ls $LS_OPTION -lh --color'
+alias l='ls $LS_OPTIONS -Ff --color'
+alias ld='ls -d $LS_OPTIONS -af --color'  # directories only!
+alias pgrep='pgrep -lf'
+
+#  -h makes the numbers human
+alias df='df -h'
+alias du='du -h -c'
+alias ps='ps'
+alias ping='ping -c 5'
+alias mkdir='mkdir -p'
+alias grep='grep --colour'
+
+
+#enable bash completion
+[ -f /etc/bash-completion ] && source /etc/bash-completion
+
+
+function lastcommandfailed() {
+  code=$?
+  if [ $code != 0 ]; then
+    echo -n $'\033[37;1m[exited \033[31;1m'
+    echo -n $code
+    echo -n $'\033[37;1m] '
+  fi
+}
+
+function activevirtualenv() {
+  if [ -n "$VIRTUAL_ENV" ]; then
+      echo -n "("
+      echo -n $(basename $VIRTUAL_ENV)
+      echo -n ") "
+  fi
+}
+
+export INPUTRC=~/.inputrc
+export PROMPT_COMMAND='echo -n -e "\033k\033\0134"'
+
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative" 
+
+# taken from http://plasti.cx/2009/10/23/vebose-git-dirty-prompt
+# origin of work http://henrik.nyh.se/2008/12/git-dirty-prompt
+function parse_git_dirty {
+status=$(git status 2> /dev/null)
+  dirty=`    echo -n "${status}" 2> /dev/null | grep -q "Changed but not updated" 2> /dev/null; echo "$?"`
+  untracked=`echo -n "${status}" 2> /dev/null | grep -q "Untracked files" 2> /dev/null; echo "$?"`
+  ahead=`    echo -n "${status}" 2> /dev/null | grep -q "Your branch is ahead of" 2> /dev/null; echo "$?"`
+  newfile=`  echo -n "${status}" 2> /dev/null | grep -q "new file:" 2> /dev/null; echo "$?"`
+  renamed=`  echo -n "${status}" 2> /dev/null | grep -q "renamed:" 2> /dev/null; echo "$?"`
+  bits=''
+  if [ "${dirty}" == "0" ]; then
+    bits="${bits}*"
+  fi
+  if [ "${untracked}" == "0" ]; then
+    bits="${bits}?"
+  fi
+  #if [ "${newfile}" == "0" ]; then
+  #  bits="${bits}*"
+  #fi
+  if [ "${ahead}" == "0" ]; then
+    bits="${bits}+"
+  fi
+  if [ "${renamed}" == "0" ]; then
+    bits="${bits}>"
+  fi
+  echo "${bits}"
+}
+
+function parse_git_branch {
+    ref=$(git branch 2>/dev/null|grep \*|sed 's/* //') || return
+    if [ "$ref" != "" ]
+    then
+        echo "("${ref}") "
+    fi
+}
+
+DEFAULT_COLOR="[33;0m"
+GRAY_COLOR="[37;1m"
+PINK_COLOR="[35;1m"
+GREEN_COLOR="[32;1m"
+CYAN_COLOR="[36;1m"
+RED_COLOR="[31;1m"
+ORANGE_COLOR="[33;1m"
+RED="\[\033[0;31m\]"
+YELLOW="\[\033[0;33m\]"
+GRAY="\[\033[0;37m\]"
+GREEN="\[\033[0;32m\]"
+LIGHT_PURPLE="\[\033[1;34m\]"
+WHITE="\[\033[1;20m\]"
+CYAN="\[\033[1;35m\]"
+export PS1="$WHITE\h|$GREEN\u $YELLOW\$(parse_git_branch)$GRAY_COLOR/\W:\[\033[0m\] "
+
+BASEPROMPT="$WHITE\$(lastcommandfailed)[\A] \h|\[\e${GREEN}\]\u\[\e${ORANGE_COLOR}\] \$(activevirtualenv)\[\e${GRAY_COLOR}\]\$(parse_git_branch)\[\e${GREEN_COLOR}\]\w\[\e${DEFAULT_COLOR}\]"
+PROMPT="${BASEPROMPT}\n\[\e${GRAY_COLOR}\]$ \[\e${DEFAULT_COLOR}\]"
+export PS1=$PROMPT
