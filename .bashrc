@@ -215,10 +215,14 @@ alias pgrep='pgrep -lf'
 alias df='df -h'
 alias du='du -h -c'
 alias ps='ps'
-alias ping='ping -c 5'
 alias mkdir='mkdir -p'
 alias grep='grep --colour'
 
+# default bash_history is 500
+export HISTSIZE=1000
+export HISTFILESIZE=1000
+export HISTCONTROL=ignoredups
+shopt -s histappend
 
 #enable bash completion
 [ -f /etc/bash-completion ] && source /etc/bash-completion
