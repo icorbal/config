@@ -10,6 +10,9 @@ let &t_ti.="\e[1 q"
 let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
 com! FormatJSON %!python -m json.tool
+com! AddSNAPSHOTS %s:-version>\(\d\+\.\d\+.\d\+\)<:-version>\1-SNAPSHOT<:g
+com! AddAndIncresaseSNAPSHOTS %s:-version>\d\+\.\d\+\.\zs\d\+<:\=submatch(0)+1.'-SNAPSHOT<':g 
+com! RemoveSNAPSHOTS %s:-version\(.*\)-SNAPSHOT:-version\1:g
 :set wildmenu
 :set nu 
 :set showmatch
@@ -106,7 +109,7 @@ Bundle 'chrismetcalf/vim-json'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'fholgado/minibufexpl.vim'
+"Bundle 'fholgado/minibufexpl.vim'
 Bundle 'Markdown'
 
 " ...
