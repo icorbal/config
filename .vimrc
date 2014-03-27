@@ -155,6 +155,10 @@ function! PHPSettings()
     let php_htmlInStrings=1
 endfunction
 
+"Line number coloring
+highlight LineNr guifg=#050505
+highlight LineNr ctermfg=grey
+
 " Folding
 " http://smartic.us/2009/04/06/code-folding-in-vim/
 "set foldmethod=indent

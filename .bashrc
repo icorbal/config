@@ -196,6 +196,7 @@
 
 #MAVEN
 alias 'mci=mvn clean install'
+alias 'mcint=mvn clean install -Dmaven.test.skip=true'
 #SVN
 alias 'svn-add-unversioned=svn st | grep "^\?" | awk "{print \$2}" | xargs svn add $1'
 export SVN_EDITOR=vim
