@@ -196,13 +196,21 @@
 
 #MAVEN
 alias 'mci=mvn clean install'
-alias 'mcint=mvn clean install -Dmaven.test.skip=true'
+alias 'mcist=mvn clean install -Dmaven.test.skip=true'
+alias 'mdep=mvn dependency:tree | vim -'
+
 #SVN
 alias 'svn-add-unversioned=svn st | grep "^\?" | awk "{print \$2}" | xargs svn add $1'
 export SVN_EDITOR=vim
+
+#GIT
+alias 'gdiff=git diff'
+alias 'gpom=git push origin master'
+
 #SERVERS
 alias watch-jb-css-cds-log='tail -f \\\\css-cds\\c$\\jboss-eap-6.1\\standalone\\log\\server.log'
 alias watch-jb-css-cds-3-log='tail -f \\\\css-cds-3\\d$\\bin\\jboss\\standalone\\log\\server.log'
+alias watch-jb-cds-labs-log='tail -f \\\\cds-labs\\bin\\jboss-eap-6.2\\standalone\\log\\server.log'
 
 export LS_OPTIONS='--color=yes'
 alias less="less -R"

@@ -1,6 +1,6 @@
 [alias]
   co = checkout
-  ci = commit
+  ci = commit --verbose
   st = status
   br = branch
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
@@ -8,8 +8,35 @@
   dump = cat-file -p
   sdc = svn dcommit
   srb = svn rebase
+
 [user]
 	name = Iago Corbal
 	email = iago.corbal@cambio.se
 [merge]
-	tool = vimdiff
+    tool = vimdiff
+
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[pretty]
+    compact = format:%Cblue%h%Creset %cr %C(bold black)%an%Cgreen%d%Creset %s
+
+
