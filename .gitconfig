@@ -41,3 +41,8 @@
     compact = format:%Cblue%h%Creset %cr %C(bold black)%an%Cgreen%d%Creset %s
 
 
+[push]
+	default = current
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
