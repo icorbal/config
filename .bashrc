@@ -196,7 +196,7 @@
 
 #MAVEN
 alias 'mci=mvn clean install'
-alias 'mcist=mvn clean install -Dmaven.test.skip=true'
+alias 'mcist=mvn clean install -DskipTests'
 alias 'mdep=mvn dependency:tree | vim -'
 
 #SVN
@@ -204,11 +204,10 @@ alias 'svn-add-unversioned=svn st | grep "^\?" | awk "{print \$2}" | xargs svn a
 export SVN_EDITOR=vim
 
 #GIT
-alias 'gdiff=git diff'
-alias 'gpom=git push origin master'
-alias 'glom=git pull origin master'
-alias 'gph=git push'
-alias 'gpl=git pull'
+alias gdiff='git diff'
+alias gitpub='git push -u origin `git name-rev HEAD 2> /dev/null | awk "{ print \\$2 }"`'
+alias gitl='git log --pretty=compact --graph --color --first-parent @{upstream}...HEAD'
+alias gitlm='git log --pretty=compact --graph --color --first-parent origin/master...HEAD'
 
 #SERVERS
 alias watch-jb-css-cds-log='tail -f \\\\css-cds\\c$\\jboss-eap-6.1\\standalone\\log\\server.log'
@@ -322,3 +321,25 @@ export PS1="$WHITE\h|$GREEN\u $YELLOW\$(parse_git_branch)$GRAY_COLOR/\W:\[\033[0
 BASEPROMPT="$WHITE\$(lastcommandfailed)[\A] \h|\[\e${GREEN}\]\u\[\e${ORANGE_COLOR}\] \$(activevirtualenv)\[\e${GRAY_COLOR}\]\$(parse_git_branch)\[\e${GREEN_COLOR}\]\w\[\e${DEFAULT_COLOR}\]"
 PROMPT="${BASEPROMPT}\n\[\e${GRAY_COLOR}\]$ \[\e${DEFAULT_COLOR}\]"
 export PS1=$PROMPT
+
+SSH_ENV=$HOME/.ssh/environment
+   
+# start the ssh-agent
+function start_agent {
+    echo "Initializing new SSH agent..."
+    # spawn ssh-agent
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add
+}
+                         
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+ fi

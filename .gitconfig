@@ -12,7 +12,7 @@
 
 [user]
 	name = Iago Corbal
-	email = iago.corbal@cambio.se
+	email = Iago.Corbal@cambio.se
 [merge]
     tool = vimdiff
 
@@ -42,7 +42,8 @@
 
 
 [push]
-	default = current
+    default = upstream
+
 [branch "master"]
 	remote = origin
     merge = refs/heads/master
