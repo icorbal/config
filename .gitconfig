@@ -50,3 +50,4 @@
 
 [core]
     excludesfile = ~/projects/.gitignore
+	autocrlf = true

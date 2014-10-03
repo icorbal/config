@@ -195,9 +195,9 @@
 #   return 0
 
 #MAVEN
-alias 'mci=mvn clean install'
-alias 'mcist=mvn clean install -DskipTests'
-alias 'mdep=mvn dependency:tree | vim -'
+alias mci='mvn clean install'
+alias mcist'=mvn clean install -DskipTests'
+alias mdep='mvn dependency:tree | vim -'
 
 #SVN
 alias 'svn-add-unversioned=svn st | grep "^\?" | awk "{print \$2}" | xargs svn add $1'
@@ -208,6 +208,13 @@ alias gdiff='git diff'
 alias gitpub='git push -u origin `git name-rev HEAD 2> /dev/null | awk "{ print \\$2 }"`'
 alias gitl='git log --pretty=compact --graph --color --first-parent @{upstream}...HEAD'
 alias gitlm='git log --pretty=compact --graph --color --first-parent origin/master...HEAD'
+function git_current_branch() {
+    git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///'
+}
+   
+alias gpthis='git push origin HEAD:$(git_current_branch)'
+alias grb='git rebase -p'
+alias gup='git fetch origin && grb origin/$(git_current_branch)'
 
 #SERVERS
 alias watch-jb-css-cds-log='tail -f \\\\css-cds\\c$\\jboss-eap-6.1\\standalone\\log\\server.log'

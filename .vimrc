@@ -200,3 +200,4 @@ function! MaximizeToggle()
         only
     endif
 endfunction
+
