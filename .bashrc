@@ -222,6 +222,7 @@ alias watch-jb-css-cds-3-log='tail -f \\\\css-cds-3\\d$\\bin\\jboss\\standalone\
 alias watch-jb-css-cds-4-log='tail -f \\\\css-cds-4\\d$\\bin\\jboss-eap-6.1\\standalone\\log\\server.log'
 alias watch-jb-css-cds-5-log='tail -f \\\\css-cds-5\\c$\\jboss-eap-6.1\\standalone\\log\\server.log'
 alias watch-jb-cds-labs-log='tail -f \\\\cds-labs\\bin\\jboss-eap-6.2\\standalone\\log\\server.log'
+alias watch-thinkehr-css-cds-4-log='tail -f \\\\css-cds-4\\d$\\bin\\thinkehr-es-server-1.6.7\\logs\\thinkehr-full.log'
 
 #PI
 alias pi='ssh pi@pi'
