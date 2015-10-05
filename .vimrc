@@ -1,3 +1,6 @@
+source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
+set laststatus=2
+
 set nocompatible
 syntax on
 "colorscheme wombat
@@ -32,7 +35,8 @@ filetype off                  " required
 
 set wildmode=longest,list,full
 set wildmenu "Turn on WiLd menu
-
+set encoding=utf8
+set termencoding=utf8
 set ruler "Always show current position
 
 set cmdheight=1 "The commandbar height
@@ -104,6 +108,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'Markdown'
 Plugin 'burnettk/vim-angular'
+Plugin 'mjakl/vim-asciidoc'
+
 "
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
