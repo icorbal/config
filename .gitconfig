@@ -49,7 +49,6 @@
     merge = refs/heads/master
 
 [core]
-    excludesfile = ~/projects/.gitignore
-	autocrlf = true
+
 [rerere]
 	enabled = 1
